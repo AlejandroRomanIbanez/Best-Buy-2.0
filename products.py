@@ -78,4 +78,7 @@ class Product:
     Returns:
     str: A string indicating the total price of the purchase.
     """
+    if quantity > self.quantity:
+        raise ValueError("Insufficient quantity available for purchase.")
+    self.quantity -= quantity
     return f"Total price: {self.price * quantity}"
