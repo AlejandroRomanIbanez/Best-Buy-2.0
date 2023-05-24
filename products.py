@@ -82,3 +82,34 @@ class Product:
         raise ValueError("Insufficient quantity available for purchase.")
     self.quantity -= quantity
     return f"Total price: {self.price * quantity}"
+
+class NonStockedProduct(Product):
+
+  def __init__(self, name, price):
+      super().__init__(name, price, float("inf"))
+
+  def get_quantity(self):
+    pass
+
+  def set_quantity(self, quantity):
+    pass
+
+  def is_active(self):
+    self.active = True
+    return self.active
+
+  def buy(self, quantity):
+    return f"Total price: {self.price * quantity}"
+
+
+class LimitedProduct(Product):
+
+  def __init__(self, name, price, quantity, maximum=1):
+    super().__init__(name, price, quantity)
+    self.maximum = maximum
+
+  def buy(self, quantity):
+      if quantity > self.maximum:
+        raise ValueError(f"Cannot purchase more than {self.maximum} of {self.name}.")
+      return super().buy(quantity)
+

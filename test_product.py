@@ -19,11 +19,12 @@ def test_prod_becomes_inactive():
 def test_buy_modifies_quantity():
     product = Product("Example Product", 10, 20)
     purchase_quantity = 5
+    expected_quantity = product.quantity - purchase_quantity
     expected_output = f"Total price: {product.price * purchase_quantity}"
 
     result = product.buy(purchase_quantity)
 
-    assert product.quantity == 15
+    assert product.quantity == expected_quantity
     assert result == expected_output
 
 def test_buy_too_much():

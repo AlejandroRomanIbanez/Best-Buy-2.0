@@ -4,7 +4,9 @@ import store
 
 product_list = [products.Product("MacBook Air M2", price=1450, quantity=100),
                 products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-                products.Product("Google Pixel 7", price=500, quantity=250)
+                products.Product("Google Pixel 7", price=500, quantity=250),
+                products.NonStockedProduct("Windows License", price=125),
+                products.LimitedProduct("Shipping", price=10, quantity=250, maximum=1)
                 ]
 best_buy = store.Store(product_list)
 
@@ -47,6 +49,9 @@ Please choose a number: """))
           continue
         product = store_object.products[product_index]
         quantity = int(input("What amount do you want?"))
+        if isinstance(product, products.LimitedProduct) and quantity > product.maximum:
+          print(f"Cannot purchase more than {product.maximum} of {product.name}. Please try again.")
+          continue
         if quantity > product.quantity:
             print("Not enough quantity in the store. Please try again.")
             continue

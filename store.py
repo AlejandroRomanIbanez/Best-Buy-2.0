@@ -34,7 +34,7 @@ class Store():
     Returns:
     str: A string indicating the total quantity of items in the store.
     """
-    total = sum(product.quantity for product in self.products)
+    total = sum(product.quantity for product in self.products if product.quantity != float('inf'))
     return f"Total of {total} items in store"
 
   def get_all_products(self):
