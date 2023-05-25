@@ -46,21 +46,21 @@ class Store():
     """
     product_list = []
     for index, product in enumerate(self.products, start=1):
+      promotion_info = product.promotion.name if product.promotion else "No promotion"
       product_info = f"{index}. {product.name}, " \
               f"Price: ${product.price}, " \
-              f"Quantity: {product.quantity}"
+              f"Quantity: {product.quantity}, " \
+              f"Discount: {promotion_info}"
       product_list.append(product_info)
     return product_list
 
   def order(self, shopping_list):
         """
         Place an order for the given shopping list.
-
         Args:
-            shopping_list (list): A list of tuples containing the products and quantities to order.
-
+        shopping_list (list): A list of tuples containing the products and quantities to order.
         Returns:
-            float: The total price of the order.
+        float: The total price of the order.
         """
         total_price = 0
         for product, quantity in shopping_list:
@@ -79,4 +79,13 @@ class Store():
             found_product.quantity -= quantity
             if found_product.quantity == 0:
               self.remove_product(found_product)
+            if product.promotion is not None:
+                if product.promotion.name == "Second Half price!":
+                    total_price -= found_product.price * quantity // 2
+                    return total_price + found_product.price * (quantity - 1) // 2
+                elif product.promotion.name == "Third One Free!":
+                    total_price -= found_product.price * (quantity // 3)
+                elif product.promotion.name == "30% off!":
+                    discount = found_product.price * (product.promotion.percent / 100)
+                    total_price -= discount * quantity
         return total_price
