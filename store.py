@@ -1,60 +1,60 @@
-class Store():
-  """A class representing a store."""
+class Store:
+    """A class representing a store."""
 
-  def __init__(self, products):
-    """
-    Initialize a Store object.
-    Args:
-    products (list): A list of products in the store.
-    """
-    self.products = products
+    def __init__(self, products):
+        """
+        Initialize a Store object.
+        Args:
+        products (list): A list of products in the store.
+        """
+        self.products = products
 
-  def add_product(self, product):
-    """
-    Add a product to the store.
-    Args:
-    product: The product to add to the store.
-    """
-    self.products.append(product)
+    def add_product(self, product):
+        """
+        Add a product to the store.
+        Args:
+        product: The product to add to the store.
+        """
+        self.products.append(product)
 
-  def remove_product(self, product):
-    """
-    Remove a product from the store.
-    Args:
-    product: The product to remove from the store.
-    """
-    try:
-      self.products.remove(product)
-    except ValueError:
-      print(f"Product {product.name} is not in the store.")
+    def remove_product(self, product):
+        """
+        Remove a product from the store.
+        Args:
+        product: The product to remove from the store.
+        """
+        try:
+            self.products.remove(product)
+        except ValueError:
+            print(f"Product {product.name} is not in the store.")
 
-  def get_total_quantity(self):
-    """
-    Get the total quantity of items in the store.
-    Returns:
-    str: A string indicating the total quantity of items in the store.
-    """
-    total = sum(product.quantity for product in self.products if product.quantity != float('inf'))
-    return f"Total of {total} items in store"
+    def get_total_quantity(self):
+        """
+        Get the total quantity of items in the store.
+        Returns:
+        str: A string indicating the total quantity of items in the store.
+        """
+        total = sum(product.quantity for product in self.products if product.quantity != float('inf'))
+        return f"Total of {total} items in store"
 
-  def get_all_products(self):
-    """
-    Get information about all products in the store.
-    Returns:
-    list: A list of strings representing the information
-    of all products in the store.
-    """
-    product_list = []
-    for index, product in enumerate(self.products, start=1):
-      promotion_info = product.promotion.name if product.promotion else "No promotion"
-      product_info = f"{index}. {product.name}, " \
-              f"Price: ${product.price}, " \
-              f"Quantity: {product.quantity}, " \
-              f"Discount: {promotion_info}"
-      product_list.append(product_info)
-    return product_list
+    def get_all_products(self):
+        """
+        Get information about all products in the store.
+        Returns:
+        list: A list of strings representing the information
+        of all products in the store.
+        """
+        product_list = []
+        for index, product in enumerate(self.products, start=1):
+            promotion_info = product.promotion.name if product.promotion else "No promotion"
+            product_info = f"{index}. {product.name}, " \
+                           f"Price: ${product.price}, " \
+                           f"Quantity: {product.quantity}, " \
+                           f"Discount: {promotion_info}"
+            product_list.append(product_info)
+        return product_list
 
-  def order(self, shopping_list):
+    def order(self, shopping_list):
         """
         Place an order for the given shopping list.
         Args:
@@ -78,7 +78,7 @@ class Store():
             total_price += found_product.price * quantity
             found_product.quantity -= quantity
             if found_product.quantity == 0:
-              self.remove_product(found_product)
+                self.remove_product(found_product)
             if product.promotion is not None:
                 if product.promotion.name == "Second Half price!":
                     total_price -= found_product.price * quantity // 2
